@@ -196,6 +196,10 @@ module X12
       self.nodes.find{|i| i.has_content?}
     end
 
+    def has_no_content?
+      !has_content?
+    end
+
     # Adds a repeat to a segment or loop. Returns a new segment/loop or self if empty.
     def repeat
       res = if self.has_content? # Do not repeat an empty segment
