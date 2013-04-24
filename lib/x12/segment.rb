@@ -41,6 +41,10 @@ module X12
 
       s = m.post_match
       self.parsed_str = m[0]
+
+      @fields = self.to_s.chop.split(Regexp.new(Regexp.escape(field_separator)))
+      self.nodes.each_index { |i| self.nodes[i].content = @fields[i+1] }
+
       s = do_repeats(s)
 
       #puts "Parsed segment "+self.inspect
