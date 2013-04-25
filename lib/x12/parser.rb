@@ -63,7 +63,14 @@ module X12
       save_definition = @x12_definition
 
       # Read and parse the definition
-      str = File.open(X12::Parser.sanitized_file_name(file_name), 'r').read
+      sanitized_file_name = X12::Parser.sanitized_file_name(file_name)
+      if File.exists?(sanitized_file_name)
+        path = sanitized_file_name
+      else
+        path = File.join(File.dirname(File.expand_path(__FILE__)), "..", "..", "misc", File.basename(file_name))
+      end
+      str = File.open(path, 'r').read
+
       @dir_name = File.dirname(File.expand_path(file_name)) # to look up other files if needed
       @x12_definition = X12::XMLDefinitions.new(str)
 
