@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
-
 require 'awesome_print'
-
 require 'x12'
 
 RSpec.configure do |config|
@@ -23,3 +21,4 @@ def sample_xml
 </Loop>
 EOF
 end
+

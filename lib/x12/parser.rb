@@ -1,50 +1,6 @@
-#--
-#     This file is part of the X12Parser library that provides tools to
-#     manipulate X12 messages using Ruby native syntax.
-#
-#     http://x12parser.rubyforge.org 
-#     
-#     Copyright (C) 2008 APP Design, Inc.
-#
-#     This library is free software; you can redistribute it and/or
-#     modify it under the terms of the GNU Lesser General Public
-#     License as published by the Free Software Foundation; either
-#     version 2.1 of the License, or (at your option) any later version.
-#
-#     This library is distributed in the hope that it will be useful,
-#     but WITHOUT ANY WARRANTY; without even the implied warranty of
-#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#     Lesser General Public License for more details.
-#
-#     You should have received a copy of the GNU Lesser General Public
-#     License along with this library; if not, write to the Free Software
-#     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#++
-#
-
 module X12
-
-  # $Id: Parser.rb 89 2009-05-13 19:36:20Z ikk $
-  #
-  # Main class for creating X12 parsers and factories.
-
   class Parser
-
-    # These constitute prohibited file names under Microsoft
-    MS_DEVICES = [   
-                  'CON',
-                  'PRN',
-                  'AUX',
-                  'CLOCK$',
-                  'NUL',
-                  'COM1',
-                  'LPT1',
-                  'LPT2',
-                  'LPT3',
-                  'COM2',
-                  'COM3',
-                  'COM4',
-                 ]
+    MS_DEVICES = ['CON', 'PRN', 'AUX', 'CLOCK$', 'NUL', 'COM1', 'LPT1', 'LPT2', 'LPT3', 'COM2', 'COM3', 'COM4']
 
     # Fixes up the file name so we don't worry about DOS files
     def self.sanitized_file_name(name)
@@ -57,8 +13,6 @@ module X12
       end
     end
 
-
-    # Creates a parser out of a definition
     def initialize(file_name)
       save_definition = @x12_definition
 
@@ -89,8 +43,7 @@ module X12
           @x12_definition = save_definition
         }
       end
-
-    end # initialize
+    end
 
     # Parse a loop of a given name out of a string. Throws an exception if the loop name is not defined.
     def parse(loop_name, str)
@@ -99,7 +52,7 @@ module X12
       loop = loop.dup
       loop.parse(str)
       return loop
-    end # parse
+    end
 
     # Make an empty loop to be filled out with information
     def factory(loop_name)
@@ -107,14 +60,13 @@ module X12
       throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
       loop = loop.dup
       return loop
-    end # factory
+    end
 
     private
 
-    # Recursively scan the loop and instantiate fields' definitions for all its
-    # segments
+    # Recursively scan the loop and instantiate fields' definitions for all its segments
     def process_loop(loop)
-      loop.nodes.each{|i|
+      loop.nodes.each do |i|
         case i
           when X12::Loop
             process_loop(i)
@@ -123,7 +75,7 @@ module X12
           else
             return
         end
-      }
+      end
     end
 
     # Instantiate segment's fields as previously defined
@@ -136,7 +88,7 @@ module X12
       else
         segment_definition = @x12_definition[X12::Segment][segment.name]
       end
-      segment_definition.nodes.each_index{|i|
+      segment_definition.nodes.each_index do |i|
         segment.nodes[i] = segment_definition.nodes[i] 
         # Make sure we have the validation table if any for this field. Try to read one in if missing.
         table = segment.nodes[i].validation
@@ -146,8 +98,8 @@ module X12
             throw Exception.new("Cannot find a definition for table #{table}") unless @x12_definition[X12::Table] && @x12_definition[X12::Table][table]
           end
         end
-      }
+      end
     end
-
-  end # Parser
+  end
 end
+

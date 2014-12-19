@@ -234,7 +234,7 @@ IEA*3*230623206~
       se.TransactionSetControlNumber = transactionSetControlNumber
     end
 
-  end # create_270
+  end
 
   def create_fg(message, fg_num, num_of_270)
     groupControlNumber = "00#{fg_num}"
@@ -258,9 +258,9 @@ IEA*3*230623206~
       ge.NumberOfTransactionSetsIncluded=num_of_270
       ge.GroupControlNumber=groupControlNumber
     end
-  end # create_fg
-  
-  def test_all
-  end # test_all
+  end
 
-end # TestList
+  def test_all
+  end
+end
+

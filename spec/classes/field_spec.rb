@@ -63,5 +63,5 @@ describe X12::Field do
   describe "a composite" do
     # Field PositionInSegment|C030|true|1-999999| <>
   end
-
 end
+

@@ -13,7 +13,6 @@ describe X12::Segment do
       it "grabs the whole line when that's all there is" do
         subject.parse("MYSEG*997*blow~").should == ""
         subject.parsed_str.should == "MYSEG*997*blow~"
-
       end
 
       it "grabs just the segment from a larger string" do
@@ -32,19 +31,16 @@ describe X12::Segment do
         subject.regexp.should == Regexp.new("^MYSEG\\*(997\\*?)?([^\\*~]*\\*?)?~")
       end
     end
-
   end
 
 
   describe "a segment with no constants" do
-
     subject { X12::Segment.new("MYSEG", [field_1, field_2], 1..999) }
 
     describe "#parse" do
       it "grabs the whole line when that's all there is" do
         subject.parse("MYSEG*joe*blow~").should == ""
         subject.parsed_str.should == "MYSEG*joe*blow~"
-
       end
 
       it "grabs just the segment from a larger string" do
@@ -75,8 +71,7 @@ describe X12::Segment do
       it "doesn't find a field that isn't there" do
         subject.find_field("missing").class.should == X12::Empty
       end
-
     end
   end
-
 end
+

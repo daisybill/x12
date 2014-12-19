@@ -33,7 +33,7 @@ describe "a 997 factory" do
 
     subject.L1000.AK5 do |a|
       a.TransactionSetAcknowledgmentCode = 'A'
-    end # a
+    end
 
     # Should be two repeats in total
     subject.L1000.repeat do |l1000|
@@ -53,16 +53,16 @@ describe "a 997 factory" do
               #s.DataElementReferenceNumber = 
               s.DataElementSyntaxErrorCode = ak4_repeat
               #s.CopyOfBadDataElement       =
-            end # s
-          end # ak4_repeat
-        end # l1010
-      end # loop_repeat
+            end
+          end
+        end
+      end
 
       l1000.AK5 do |a|
         a.TransactionSetAcknowledgmentCode = 'E'
         a.TransactionSetSyntaxErrorCode4 = 999
-      end # a
-    end # l1000
+      end
+    end
 
     subject.render.should == document
   end
@@ -84,4 +84,4 @@ AK9****~
 SE**~'.gsub(/\n/,'')
   end
 
-end # TestList
+end

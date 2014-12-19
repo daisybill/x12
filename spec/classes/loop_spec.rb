@@ -30,7 +30,6 @@ describe X12::Loop do
         result.should == ""
 
         subject.nodes[0].size.should == 2
-
       end
 
       # Not sure this is correct behaviour, as the definition above said 2 loops
@@ -40,7 +39,6 @@ describe X12::Loop do
         result.should == ""
 
         subject.nodes[0].size.should == 3
-
       end
 
       it "returns the rest of a string when there is more" do
@@ -75,7 +73,6 @@ describe X12::Loop do
           it "returns the whole string" do
             subject.parse(document).should == document
           end
-
         end
 
         context "and a document that has a second loop that starts similar to the first" do
@@ -169,12 +166,10 @@ describe X12::Loop do
           subject.LOOPB.to_s.should == "GS*second~BB*bb~"
         end
       end
-
     end
   end
 
   describe "#render" do
   end
-
-
 end
+

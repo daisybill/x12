@@ -6,7 +6,7 @@ describe "a 997 document" do
   it "tests ST" do
     subject.ST.to_s.should == 'ST*270*1001~'
     subject.ST.TransactionSetIdentifierCode.should == '270'
-  end # test_ST
+  end
 
   it "tests L2000A_NM1" do
     subject.L2000A.L2100A.NM1.NameLastOrOrganizationName.should == 'BIG PAYOR'
@@ -24,7 +24,7 @@ describe "a 997 document" do
     subject.L2000D.HHH.should == X12::EMPTY
     subject.L2000B.L2111.should == X12::EMPTY
     subject.L2000C.L2100C.N3.AddressInformation1.should == ''
-  end # test_absent
+  end
 
   def document
 'ST*270*1001~
@@ -42,4 +42,5 @@ SE*12*1001~
 '.gsub(/\n/,'')
   end
 
-end # TestParse
+end
+

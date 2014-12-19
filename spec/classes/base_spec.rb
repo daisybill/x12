@@ -10,5 +10,5 @@ describe X12::Base do
       end
     end
   end
-
 end
+

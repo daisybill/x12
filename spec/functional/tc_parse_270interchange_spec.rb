@@ -8,7 +8,7 @@ describe "a 270 document with interchange" do
     subject.ISA.InterchangeSenderId.should == '0000000Eliginet'
     subject.IEA.NumberOfIncludedFunctionalGroups.should == '3'
 
-  end # test_ST
+  end
 
   it "tests FG" do
     fg = subject.FG
@@ -25,7 +25,7 @@ describe "a 270 document with interchange" do
   it "tests ST" do
     subject.FG[1]._270[1].ST.to_s.should == 'ST*270*1001~'
     subject.FG[1]._270[1].ST.TransactionSetIdentifierCode.should == '270'
-  end # test_ST
+  end
 
   it "tests L2000A_NM1" do
     subject.FG[1]._270[1].L2000A.L2100A.NM1.NameLastOrOrganizationName.should == 'RED CROSS'
@@ -132,5 +132,5 @@ GE*1*002~
 IEA*3*230623206~'.gsub(/\n/,'')
   end
 
+end
 
-end # TestParse

@@ -11,7 +11,6 @@ describe X12::XMLDefinitions do
     end
 
     context "where the root is not a definition" do
-
       it "parses the loop element" do
         described_class.any_instance.should_receive(:parse_loop).and_return(something)
         described_class.new('<Loop name="test" comment="test"></Loop>')
@@ -19,7 +18,6 @@ describe X12::XMLDefinitions do
     end
 
     context "a loop" do
-
       subject { described_class.new('<Definition><Loop name="test" comment="test"></Loop></Definition>') }
 
       context "containing another loop" do
@@ -86,12 +84,11 @@ describe X12::XMLDefinitions do
       end
 
       it "parses the fields" do
-
         composite = subject[X12::Composite]["C043"]
 
         expect(composite.nodes.map(&:class)).to eq [ X12::Field ]
       end
     end
-
   end
 end
+

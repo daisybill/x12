@@ -15,7 +15,6 @@ describe X12::Parser do
 
       definition[X12::Loop].include?("outer").should be_true
     end
-
   end
 
 
@@ -35,8 +34,6 @@ describe X12::Parser do
     it "returns a modified DOS directory name" do
       X12::Parser.sanitized_file_name("/path/to/COM1.xml").should == "/path/to/COM1_.xml"
     end
-
   end
-
-
 end
+

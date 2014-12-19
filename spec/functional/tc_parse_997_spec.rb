@@ -10,11 +10,11 @@ describe "a 997 document" do
 
   it "tests AK1" do
     subject.AK1.GroupControlNumber.should == '293328532'
-  end # test_AK1
+  end
 
   it "tests AK2" do
     subject.L1000.AK2.TransactionSetIdentifierCode.should == '270'
-  end # test_AK2
+  end
 
   it "tests L1010" do
     subject.L1000.L1010.to_s.should =~ /L1010_0/
@@ -22,7 +22,7 @@ describe "a 997 document" do
     subject.L1000.L1010.size.should == 3
     subject.L1000.L1010.to_a[2].to_s.should =~ /L1010_2/
     subject.L1000.L1010[2].to_s.should =~ /L1010_2/
-  end # test_L1010
+  end
 
   it "tests AK4" do
     subject.L1000.L1010.to_a[1].AK4.to_s.should == 'AK4*1:0*66*1~'
@@ -34,7 +34,7 @@ describe "a 997 document" do
     subject.L1000.L1010.to_a[1].AK4.to_a[1].to_s.should == 'AK4*1:1*66*1~'
     subject.L1000.L1010[1].AK4[1].to_s.should == 'AK4*1:1*66*1~'
     subject.L1000.L1010.AK4.DataElementReferenceNumber.should == '66'
-  end # test_AK4
+  end
 
   it "tests absent" do
     subject.L1000.AK8.TransactionSetIdentifierCode.should == X12::EMPTY
@@ -46,7 +46,7 @@ describe "a 997 document" do
     subject.L1000.L1010[99].AK4.should == X12::EMPTY
 
     subject.L1000.AK8.TransactionSetIdentifierCode.to_s.should == ''
-  end # test_absent
+  end
 
   def a_997_document
 'ST*997*2878~
@@ -67,3 +67,4 @@ SE*8*2878~
 '.gsub(/\n/, "")
   end
 end
+

@@ -38,8 +38,6 @@ describe "a mixed template" do
 
       subject.FG2.to_s.should == "GS*Number2~ST*997*2~BAR*Doc2SE*2~GE*Number1~"
     end
-
-
   end
 
   def document_a
@@ -109,7 +107,5 @@ IEA*2~'.gsub(/\n/,'')
 </Loop>
 '
   end
+end
 
-
-
-end # TestParse
