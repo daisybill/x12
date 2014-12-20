@@ -4,31 +4,31 @@ describe "a 270 document with interchange" do
   subject { X12::Parser.new('misc/270interchange.xml').parse('270interchange', document) }
 
   it "tests ISA_IEA" do
-    subject.ISA.to_s.should == 'ISA*03*user      *01*password  *ZZ*0000000Eliginet*ZZ*CHICAGO BLUES*070724*1726*U*00401*230623206*0*T*:~'
-    subject.ISA.InterchangeSenderId.should == '0000000Eliginet'
-    subject.IEA.NumberOfIncludedFunctionalGroups.should == '3'
+    expect(subject.ISA.to_s).to eq('ISA*03*user      *01*password  *ZZ*0000000Eliginet*ZZ*CHICAGO BLUES*070724*1726*U*00401*230623206*0*T*:~')
+    expect(subject.ISA.InterchangeSenderId).to eq('0000000Eliginet')
+    expect(subject.IEA.NumberOfIncludedFunctionalGroups).to eq('3')
 
   end
 
   it "tests FG" do
     fg = subject.FG
-    fg.to_a.size.should == 3
-    fg.size.should == 3
-    fg[0].find('270').to_a.size.should == 3
-    fg[1].find('270').size.should == 2
-    fg[2]._270.size.should == 1
-    fg[0].GE.NumberOfTransactionSetsIncluded.should == '3'
-    fg[1].GE.GroupControlNumber.should == '001'
-    fg[2].GS.GroupControlNumber.should == '002'
+    expect(fg.to_a.size).to eq(3)
+    expect(fg.size).to eq(3)
+    expect(fg[0].find('270').to_a.size).to eq(3)
+    expect(fg[1].find('270').size).to eq(2)
+    expect(fg[2]._270.size).to eq(1)
+    expect(fg[0].GE.NumberOfTransactionSetsIncluded).to eq('3')
+    expect(fg[1].GE.GroupControlNumber).to eq('001')
+    expect(fg[2].GS.GroupControlNumber).to eq('002')
   end
 
   it "tests ST" do
-    subject.FG[1]._270[1].ST.to_s.should == 'ST*270*1001~'
-    subject.FG[1]._270[1].ST.TransactionSetIdentifierCode.should == '270'
+    expect(subject.FG[1]._270[1].ST.to_s).to eq('ST*270*1001~')
+    expect(subject.FG[1]._270[1].ST.TransactionSetIdentifierCode).to eq('270')
   end
 
   it "tests L2000A_NM1" do
-    subject.FG[1]._270[1].L2000A.L2100A.NM1.NameLastOrOrganizationName.should == 'RED CROSS'
+    expect(subject.FG[1]._270[1].L2000A.L2100A.NM1.NameLastOrOrganizationName).to eq('RED CROSS')
   end
 
   it "tests L2000C_NM1" do
@@ -37,7 +37,7 @@ describe "a 270 document with interchange" do
         _270.L2000C do |l2000C|
           l2000C.L2100C do |l2100C|
             l2100C.NM1 do |nm1|
-              nm1.NameFirst.should == 'FirstName'
+              expect(nm1.NameFirst).to eq('FirstName')
             end
           end
         end
@@ -46,7 +46,7 @@ describe "a 270 document with interchange" do
   end
 
   it "tests L2000A_HL" do
-    subject.FG[1]._270[1].L2000A.HL.HierarchicalParentIdNumber.should == ''
+    expect(subject.FG[1]._270[1].L2000A.HL.HierarchicalParentIdNumber).to eq('')
   end
 
   def document

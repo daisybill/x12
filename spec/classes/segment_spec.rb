@@ -11,24 +11,24 @@ describe X12::Segment do
 
     describe "#parse" do
       it "grabs the whole line when that's all there is" do
-        subject.parse("MYSEG*997*blow~").should == ""
-        subject.parsed_str.should == "MYSEG*997*blow~"
+        expect(subject.parse("MYSEG*997*blow~")).to eq("")
+        expect(subject.parsed_str).to eq("MYSEG*997*blow~")
       end
 
       it "grabs just the segment from a larger string" do
-        subject.parse("MYSEG*997*blow~extra*1234~").should == "extra*1234~"
-        subject.parsed_str.should == "MYSEG*997*blow~"
+        expect(subject.parse("MYSEG*997*blow~extra*1234~")).to eq("extra*1234~")
+        expect(subject.parsed_str).to eq("MYSEG*997*blow~")
       end
 
       it "returns nil if the segment wasn't found" do
-        subject.parse("extra*1234~").should == nil
-        subject.parsed_str.should == nil
+        expect(subject.parse("extra*1234~")).to be_nil
+        expect(subject.parsed_str).to be_nil
       end
     end
 
     describe "#regexp" do
       it "returns a correct regular expression" do
-        subject.regexp.should == Regexp.new("^MYSEG\\*(997\\*?)?([^\\*~]*\\*?)?~")
+        expect(subject.regexp).to eq(Regexp.new("^MYSEG\\*(997\\*?)?([^\\*~]*\\*?)?~"))
       end
     end
   end
@@ -39,18 +39,18 @@ describe X12::Segment do
 
     describe "#parse" do
       it "grabs the whole line when that's all there is" do
-        subject.parse("MYSEG*joe*blow~").should == ""
-        subject.parsed_str.should == "MYSEG*joe*blow~"
+        expect(subject.parse("MYSEG*joe*blow~")).to eq("")
+        expect(subject.parsed_str).to eq("MYSEG*joe*blow~")
       end
 
       it "grabs just the segment from a larger string" do
-        subject.parse("MYSEG*joe*blow~extra*1234~").should == "extra*1234~"
-        subject.parsed_str.should == "MYSEG*joe*blow~"
+        expect(subject.parse("MYSEG*joe*blow~extra*1234~")).to eq("extra*1234~")
+        expect(subject.parsed_str).to eq("MYSEG*joe*blow~")
       end
 
       it "returns nil if the segment wasn't found" do
-        subject.parse("extra*1234~").should == nil
-        subject.parsed_str.should == nil
+        expect(subject.parse("extra*1234~")).to be_nil
+        expect(subject.parsed_str).to be_nil
       end
     end
 
@@ -59,17 +59,17 @@ describe X12::Segment do
 
     describe "#regexp" do
       it "returns a regular expression to grab the whole line" do
-        subject.regexp.should == Regexp.new("^MYSEG\\*[^~]*~")
+        expect(subject.regexp).to eq(Regexp.new("^MYSEG\\*[^~]*~"))
       end
     end
 
     describe "#find_field" do
       it "finds a field that is there" do
-        subject.find_field("test2").should == field_1
+        expect(subject.find_field("test2")).to eq(field_1)
       end
 
       it "doesn't find a field that isn't there" do
-        subject.find_field("missing").class.should == X12::Empty
+        expect(subject.find_field("missing").class).to eq(X12::Empty)
       end
     end
   end

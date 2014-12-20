@@ -18,33 +18,32 @@ describe X12::Loop do
         result = subject.parse("AA*foo*bar~")
 
         # should not return anything because the string is finished
-        result.should == ""
+        expect(result).to eq("")
 
         segments = subject.nodes[0]
-        segments.size.should == 1
+        expect(segments.size).to eq(1)
       end
 
       it "parses a string when there are two loops" do
         result = subject.parse("AA*foo*bar~AA*baz*bing~")
 
-        result.should == ""
-
-        subject.nodes[0].size.should == 2
+        expect(result).to eq("")
+        expect(subject.nodes[0].size).to eq(2)
       end
 
       # Not sure this is correct behaviour, as the definition above said 2 loops
       it "parses a string when there are three loops" do
         result = subject.parse("AA*foo*bar~AA*baz*bing~AA*chunky*bacon~")
 
-        result.should == ""
+        expect(result).to eq("")
 
-        subject.nodes[0].size.should == 3
+        expect(subject.nodes[0].size).to eq( 3)
       end
 
       it "returns the rest of a string when there is more" do
         result = subject.parse("AA*foo*bar~BB*more*here*bub~")
 
-        result.should == "BB*more*here*bub~"
+        expect(result).to eq("BB*more*here*bub~")
       end
     end
 
@@ -57,13 +56,13 @@ describe X12::Loop do
 
           it "parses a correct string" do
             # should not return anything because the string is finished
-            @result.should == ""
+            expect(@result).to eq("")
           end
 
           it "has two loops" do
-            subject.to_a.size.should == 2
-            subject[0].to_s.should == "GS*first~AA*one~"
-            subject[1].to_s.should == "GS*second~AA*two~"
+            expect(subject.to_a.size).to eq(2)
+            expect(subject[0].to_s).to eq("GS*first~AA*one~")
+            expect(subject[1].to_s).to eq("GS*second~AA*two~")
           end
         end
 
@@ -71,7 +70,7 @@ describe X12::Loop do
           let(:document) { "GS*first~BB*notamatch~" }
 
           it "returns the whole string" do
-            subject.parse(document).should == document
+            expect(subject.parse(document)).to eq(document)
           end
         end
 
@@ -79,12 +78,12 @@ describe X12::Loop do
           before { @result = subject.parse("GS*first~AA*one~GS*second~BB*two~") }
 
           it "parses a correct string" do
-            @result.should == "GS*second~BB*two~"
+            expect(@result).to eq("GS*second~BB*two~")
           end
 
           it "has one loop" do
-            subject.to_a.size.should == 1
-            subject[0].to_s.should == "GS*first~AA*one~"
+            expect(subject.to_a.size).to eq(1)
+            expect(subject[0].to_s).to eq("GS*first~AA*one~")
           end
         end
       end
@@ -109,23 +108,23 @@ describe X12::Loop do
 
         it "parses a correct string" do
           # should not return anything because the string is finished
-          @result.should == ""
+          expect(@result).to eq("")
         end
 
         it "has one loop A" do
-          subject.LOOPA.size.should == 1
+          expect(subject.LOOPA.size).to eq(1)
         end
 
         it "has one loop B" do
-          subject.LOOPB.size.should == 1
+          expect(subject.LOOPB.size).to eq(1)
         end
 
         it "completely parses LOOPA" do
-          subject.LOOPA.to_s.should == "GS*first~AA*aa~"
+          expect(subject.LOOPA.to_s).to eq("GS*first~AA*aa~")
         end
 
         it "completely parses LOOPB" do
-          subject.LOOPB.to_s.should == "GS*second~BB*bb~"
+          expect(subject.LOOPB.to_s).to eq("GS*second~BB*bb~")
         end
       end
 
@@ -147,29 +146,26 @@ describe X12::Loop do
 
         it "parses a correct string" do
           # should not return anything because the string is finished
-          @result.should == ""
+          expect(@result).to eq("")
         end
 
         it "has one loop A" do
-          subject.LOOPA.size.should == 1
+          expect(subject.LOOPA.size).to eq(1)
         end
 
         it "has one loop B" do
-          subject.LOOPB.size.should == 1
+          expect(subject.LOOPB.size).to eq(1)
         end
 
         it "completely parses LOOPA" do
-          subject.LOOPA.to_s.should == "GS*first~AA*aa~"
+          expect(subject.LOOPA.to_s).to eq("GS*first~AA*aa~")
         end
 
         it "completely parses LOOPB" do
-          subject.LOOPB.to_s.should == "GS*second~BB*bb~"
+          expect(subject.LOOPB.to_s).to eq("GS*second~BB*bb~")
         end
       end
     end
-  end
-
-  describe "#render" do
   end
 end
 

@@ -4,48 +4,48 @@ describe "a 997 document" do
   subject { X12::Parser.new('misc/997.xml').parse('997', a_997_document) }
 
   it "parses the ST segment" do
-    subject.ST.to_s.should == "ST*997*2878~"
-    subject.ST.TransactionSetIdentifierCode.should == "997"
+    expect(subject.ST.to_s).to eq("ST*997*2878~")
+    expect(subject.ST.TransactionSetIdentifierCode).to eq("997")
   end
 
   it "tests AK1" do
-    subject.AK1.GroupControlNumber.should == '293328532'
+    expect(subject.AK1.GroupControlNumber).to eq('293328532')
   end
 
   it "tests AK2" do
-    subject.L1000.AK2.TransactionSetIdentifierCode.should == '270'
+    expect(subject.L1000.AK2.TransactionSetIdentifierCode).to eq('270')
   end
 
   it "tests L1010" do
-    subject.L1000.L1010.to_s.should =~ /L1010_0/
-    subject.L1000.L1010.to_a.size.should == 3
-    subject.L1000.L1010.size.should == 3
-    subject.L1000.L1010.to_a[2].to_s.should =~ /L1010_2/
-    subject.L1000.L1010[2].to_s.should =~ /L1010_2/
+    expect(subject.L1000.L1010.to_s).to match(/L1010_0/)
+    expect(subject.L1000.L1010.to_a.size).to eq(3)
+    expect(subject.L1000.L1010.size).to eq(3)
+    expect(subject.L1000.L1010.to_a[2].to_s).to match(/L1010_2/)
+    expect(subject.L1000.L1010[2].to_s).to match(/L1010_2/)
   end
 
   it "tests AK4" do
-    subject.L1000.L1010.to_a[1].AK4.to_s.should == 'AK4*1:0*66*1~'
-    subject.L1000.L1010[1].AK4.to_s.should == 'AK4*1:0*66*1~'
-    subject.L1000.L1010.AK4.to_a.size.should == 3
-    subject.L1000.L1010.AK4.size.should == 3
-    subject.L1000.L1010.to_a[1].AK4.to_a.size.should == 2
-    subject.L1000.L1010[1].AK4.size.should == 2
-    subject.L1000.L1010.to_a[1].AK4.to_a[1].to_s.should == 'AK4*1:1*66*1~'
-    subject.L1000.L1010[1].AK4[1].to_s.should == 'AK4*1:1*66*1~'
-    subject.L1000.L1010.AK4.DataElementReferenceNumber.should == '66'
+    expect(subject.L1000.L1010.to_a[1].AK4.to_s).to eq('AK4*1:0*66*1~')
+    expect(subject.L1000.L1010[1].AK4.to_s).to eq('AK4*1:0*66*1~')
+    expect(subject.L1000.L1010.AK4.to_a.size).to eq(3)
+    expect(subject.L1000.L1010.AK4.size).to eq(3)
+    expect(subject.L1000.L1010.to_a[1].AK4.to_a.size).to eq(2)
+    expect(subject.L1000.L1010[1].AK4.size).to eq(2)
+    expect(subject.L1000.L1010.to_a[1].AK4.to_a[1].to_s).to eq('AK4*1:1*66*1~')
+    expect(subject.L1000.L1010[1].AK4[1].to_s).to eq('AK4*1:1*66*1~')
+    expect(subject.L1000.L1010.AK4.DataElementReferenceNumber).to eq('66')
   end
 
   it "tests absent" do
-    subject.L1000.AK8.TransactionSetIdentifierCode.should == X12::EMPTY
-    subject.L1000.L1111.should == X12::EMPTY
-    subject.L1000.L1111.L2222.should == X12::EMPTY
-    subject.L1000.L1111.L2222.AFAFA.should == X12::EMPTY
-    subject.L1000.L1010[-99].should == X12::EMPTY
-    subject.L1000.L1010[99].should == X12::EMPTY
-    subject.L1000.L1010[99].AK4.should == X12::EMPTY
+    expect(subject.L1000.AK8.TransactionSetIdentifierCode).to eq(X12::EMPTY)
+    expect(subject.L1000.L1111).to eq(X12::EMPTY)
+    expect(subject.L1000.L1111.L2222).to eq(X12::EMPTY)
+    expect(subject.L1000.L1111.L2222.AFAFA).to eq(X12::EMPTY)
+    expect(subject.L1000.L1010[-99]).to eq(X12::EMPTY)
+    expect(subject.L1000.L1010[99]).to eq(X12::EMPTY)
+    expect(subject.L1000.L1010[99].AK4).to eq(X12::EMPTY)
 
-    subject.L1000.AK8.TransactionSetIdentifierCode.to_s.should == ''
+    expect(subject.L1000.AK8.TransactionSetIdentifierCode.to_s).to eq('')
   end
 
   def a_997_document

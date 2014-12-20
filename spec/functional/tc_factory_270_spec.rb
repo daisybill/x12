@@ -104,7 +104,7 @@ describe "a 270 factory" do
       se.TransactionSetControlNumber = '1001'
     end
 
-    subject.render.should == document
+    expect(subject.render).to eq(document)
   end
 
   def document

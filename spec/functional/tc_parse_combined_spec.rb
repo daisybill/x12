@@ -2,41 +2,39 @@ require 'spec_helper'
 
 describe "a mixed template" do
   let(:parser) { X12::Parser.new('blah') }
-  before do
-    File.stub_chain(:open, :read).and_return(mixed_xml)
-  end
+  before { allow(File).to receive_message_chain(:open, :read).and_return(mixed_xml) }
 
   describe "a document with both types" do
     subject { parser.parse("message", document_a) }
 
     it "pulls out the header" do
-      subject.ISA.to_s.should == "ISA*00~"
+      expect(subject.ISA.to_s).to eq("ISA*00~")
     end
 
     it "pulls out the footer" do
-      subject.IEA.to_s.should == "IEA*2~"
+      expect(subject.IEA.to_s).to eq("IEA*2~")
     end
 
     it "pulls out the first group" do
-      subject.GS[0].Start.should == "Number1"
-      subject.FG[0].GS.to_s.should == "GS*Number1~"
+      expect(subject.GS[0].Start).to eq("Number1")
+      expect(subject.FG[0].GS.to_s).to eq("GS*Number1~")
 
-      subject.FG[0].GE.to_s.should == "GE*Number1~"
+      expect(subject.FG[0].GE.to_s).to eq("GE*Number1~")
     end
 
     it "pulls out the 824 within the first group" do
-      subject.FG[0].ST.A.should == "824"
-      subject.FG[0].ST.B.should == "1"
+      expect(subject.FG[0].ST.A).to eq("824")
+      expect(subject.FG[0].ST.B).to eq("1")
 
-      subject.FG.to_s.should == "GS*Number1~ST*824*1~FOO*hello~SE*Test~GE*Number1~"
+      expect(subject.FG.to_s).to eq("GS*Number1~ST*824*1~FOO*hello~SE*Test~GE*Number1~")
     end
 
     it "pulls out the 997 within the second group" do
-      subject.FG2.ST.A.should == "997"
-      subject.FG2[0].ST.B.should == "2"
-      subject.FG2.GS.to_s.should == "GS*Number2~"
+      expect(subject.FG2.ST.A).to eq("997")
+      expect(subject.FG2[0].ST.B).to eq("2")
+      expect(subject.FG2.GS.to_s).to eq("GS*Number2~")
 
-      subject.FG2.to_s.should == "GS*Number2~ST*997*2~BAR*Doc2SE*2~GE*Number1~"
+      expect(subject.FG2.to_s).to eq("GS*Number2~ST*997*2~BAR*Doc2SE*2~GE*Number1~")
     end
   end
 

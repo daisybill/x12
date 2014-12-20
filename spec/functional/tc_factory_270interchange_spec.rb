@@ -45,7 +45,7 @@ describe "a 270 factory with interchange" do
       iea.InterchangeControlNumber = '230623206'
     end
 
-    subject.render.should == document
+    expect(subject.render).to eq(document)
   end
 
   def document

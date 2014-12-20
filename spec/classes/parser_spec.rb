@@ -2,37 +2,37 @@ require 'spec_helper'
 
 describe X12::Parser do
   describe "#initialize" do
+    before { allow(File).to receive_message_chain(:open, :read).and_return(sample_xml) }
 
     it "processes a file" do
-      File.stub_chain(:open, :read).and_return(sample_xml)
       p = X12::Parser.new("blah.xml")
       definition = p.instance_variable_get("@x12_definition")
 
 
-      definition.class.should == X12::XMLDefinitions
-      definition.keys.count.should == 1
-      definition.include?(X12::Loop).should be_true
+      expect(definition.class).to eq(X12::XMLDefinitions)
+      expect(definition.keys.count).to eq(1)
+      expect(definition.include?(X12::Loop)).to be_truthy
 
-      definition[X12::Loop].include?("outer").should be_true
+      expect(definition[X12::Loop].include?("outer")).to be_truthy
     end
   end
 
 
   describe ".sanitized_file_name" do
     it "returns a regular file name" do
-      X12::Parser.sanitized_file_name("blah.xml").should == "blah.xml"
+      expect(X12::Parser.sanitized_file_name("blah.xml")).to eq("blah.xml")
     end
 
     it "returns a regular directory name" do
-      X12::Parser.sanitized_file_name("/path/to/blah.xml").should == "/path/to/blah.xml"
+      expect(X12::Parser.sanitized_file_name("/path/to/blah.xml")).to eq("/path/to/blah.xml")
     end
 
     it "returns a modified DOS file name" do
-      X12::Parser.sanitized_file_name("COM1.xml").should == "./COM1_.xml"
+      expect(X12::Parser.sanitized_file_name("COM1.xml")).to eq("./COM1_.xml")
     end
 
     it "returns a modified DOS directory name" do
-      X12::Parser.sanitized_file_name("/path/to/COM1.xml").should == "/path/to/COM1_.xml"
+      expect(X12::Parser.sanitized_file_name("/path/to/COM1.xml")).to eq("/path/to/COM1_.xml")
     end
   end
 end

@@ -5,14 +5,14 @@ describe X12::XMLDefinitions do
 
     context "where the root is a definition" do
       it "parses the loop element" do
-        described_class.any_instance.should_receive(:parse_loop).and_return(something)
+        allow_any_instance_of(X12::XMLDefinitions).to receive(:parse_loop).and_return(something)
         described_class.new('<Definition><Loop name="test" comment="test"></Loop></Definition>')
       end
     end
 
     context "where the root is not a definition" do
       it "parses the loop element" do
-        described_class.any_instance.should_receive(:parse_loop).and_return(something)
+        allow_any_instance_of(X12::XMLDefinitions).to receive(:parse_loop).and_return(something)
         described_class.new('<Loop name="test" comment="test"></Loop>')
       end
     end

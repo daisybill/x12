@@ -64,7 +64,7 @@ describe "a 997 factory" do
       end
     end
 
-    subject.render.should == document
+    expect(subject.render).to eq(document)
   end
 
   def document

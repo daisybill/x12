@@ -6,7 +6,7 @@ describe X12::Base do
 
     describe "#find" do
       it "can't find anything underneath it" do
-        subject.find("foo").should == X12::EMPTY
+        expect(subject.find("foo")).to eq(X12::EMPTY)
       end
     end
   end

@@ -4,26 +4,26 @@ describe "a 997 document" do
   subject { X12::Parser.new('misc/270.xml').parse('270', document) }
 
   it "tests ST" do
-    subject.ST.to_s.should == 'ST*270*1001~'
-    subject.ST.TransactionSetIdentifierCode.should == '270'
+    expect(subject.ST.to_s).to eq('ST*270*1001~')
+    expect(subject.ST.TransactionSetIdentifierCode).to eq('270')
   end
 
   it "tests L2000A_NM1" do
-    subject.L2000A.L2100A.NM1.NameLastOrOrganizationName.should == 'BIG PAYOR'
+    expect(subject.L2000A.L2100A.NM1.NameLastOrOrganizationName).to eq('BIG PAYOR')
   end
 
   it "tests L2000C_NM1" do
-    subject.L2000C.L2100C.NM1.NameFirst.should == 'Joe'
+    expect(subject.L2000C.L2100C.NM1.NameFirst).to eq('Joe')
   end
 
   it "tests L2000A_HL" do
-    subject.L2000A.HL.HierarchicalParentIdNumber.should == ''
+    expect(subject.L2000A.HL.HierarchicalParentIdNumber).to eq('')
   end
 
   it "tests absent" do
-    subject.L2000D.HHH.should == X12::EMPTY
-    subject.L2000B.L2111.should == X12::EMPTY
-    subject.L2000C.L2100C.N3.AddressInformation1.should == ''
+    expect(subject.L2000D.HHH).to eq(X12::EMPTY)
+    expect(subject.L2000B.L2111).to eq(X12::EMPTY)
+    expect(subject.L2000C.L2100C.N3.AddressInformation1).to eq('')
   end
 
   def document
