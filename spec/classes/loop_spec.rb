@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe X12::Loop do
-  let(:f_constant) { X12::Field.new("test1", "\"997\"", false, 3, 3, nil) }
-  let(:field_1) { X12::Field.new("test2", "string", false, 3, 3, nil) }
-  let(:field_2) { X12::Field.new("test3", "string", false, 3, 3, nil) }
-  let(:segment) { X12::Segment.new("AA", [field_1, field_2], 1..999) }
-  let(:gs_segment) { X12::Segment.new("GS", [field_1], 1..999) }
-  let(:aa_segment) { X12::Segment.new("AA", [field_1], 1..999) }
-  let(:bb_segment) { X12::Segment.new("BB", [field_2], 1..999) }
+describe X12::Structures::Loop do
+  let(:f_constant) { X12::Structures::Field.new("test1", "\"997\"", false, 3, 3, nil) }
+  let(:field_1) { X12::Structures::Field.new("test2", "string", false, 3, 3, nil) }
+  let(:field_2) { X12::Structures::Field.new("test3", "string", false, 3, 3, nil) }
+  let(:segment) { X12::Structures::Segment.new("AA", [field_1, field_2], 1..999) }
+  let(:gs_segment) { X12::Structures::Segment.new("GS", [field_1], 1..999) }
+  let(:aa_segment) { X12::Structures::Segment.new("AA", [field_1], 1..999) }
+  let(:bb_segment) { X12::Structures::Segment.new("BB", [field_2], 1..999) }
 
 
   describe "#parse" do
     context "on a simple segment" do
-      subject { X12::Loop.new("TEST", [segment], 1..2) }
+      subject { X12::Structures::Loop.new("TEST", [segment], 1..2) }
 
       it "parses a correct string" do
         result = subject.parse("AA*foo*bar~")
@@ -49,7 +49,7 @@ describe X12::Loop do
 
     context "on a basic loop" do
       context "with no constraints" do
-        subject { X12::Loop.new("LOOP", [gs_segment, aa_segment], 1..999) }
+        subject { X12::Structures::Loop.new("LOOP", [gs_segment, aa_segment], 1..999) }
 
         context "and a complete document" do
           before { @result = subject.parse("GS*first~AA*one~GS*second~AA*two~") }
@@ -91,8 +91,8 @@ describe X12::Loop do
 
     context "on a complex loop" do
       context "with no repeat constraints" do
-        let(:loop_a) { X12::Loop.new("LOOPA", [gs_segment, aa_segment], 1..999) }
-        let(:loop_b) { X12::Loop.new("LOOPB", [gs_segment, bb_segment], 1..999) }
+        let(:loop_a) { X12::Structures::Loop.new("LOOPA", [gs_segment, aa_segment], 1..999) }
+        let(:loop_b) { X12::Structures::Loop.new("LOOPB", [gs_segment, bb_segment], 1..999) }
 
         # Loop: OUTER
         #   Loop: LOOPA
@@ -102,7 +102,7 @@ describe X12::Loop do
         #     Segment: GS
         #     Segment: BB
 
-        subject { X12::Loop.new("OUTER", [loop_a, loop_b], 1..2) }
+        subject { X12::Structures::Loop.new("OUTER", [loop_a, loop_b], 1..2) }
 
         before { @result = subject.parse("GS*first~AA*aa~GS*second~BB*bb~") }
 
@@ -129,8 +129,8 @@ describe X12::Loop do
       end
 
       context "with repeat constraints allowing only one loop" do
-        let(:loop_a) { X12::Loop.new("LOOPA", [gs_segment, aa_segment], 1..1) }
-        let(:loop_b) { X12::Loop.new("LOOPB", [gs_segment, bb_segment], 1..1) }
+        let(:loop_a) { X12::Structures::Loop.new("LOOPA", [gs_segment, aa_segment], 1..1) }
+        let(:loop_b) { X12::Structures::Loop.new("LOOPB", [gs_segment, bb_segment], 1..1) }
 
         # Loop: OUTER
         #   Loop: LOOPA
@@ -140,7 +140,7 @@ describe X12::Loop do
         #     Segment: GS
         #     Segment: BB
 
-        subject { X12::Loop.new("OUTER", [loop_a, loop_b], 1..2) }
+        subject { X12::Structures::Loop.new("OUTER", [loop_a, loop_b], 1..2) }
 
         before { @result = subject.parse("GS*first~AA*aa~GS*second~BB*bb~") }
 
@@ -168,4 +168,3 @@ describe X12::Loop do
     end
   end
 end
-

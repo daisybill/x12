@@ -102,7 +102,7 @@ module X12
         type = "\"#{const_field.content}\""
       end
 
-      Field.new(name, type, required, min, max, validation)
+      Structures::Field.new(name, type, required, min, max, validation)
     end
 
     def parse_table(e)
@@ -121,7 +121,7 @@ module X12
       fields = e.search("Field").inject([]) do |f, field|
         f << parse_field(field)
       end
-      Segment.new(name, fields, Range.new(min, max))
+      Structures::Segment.new(name, fields, Range.new(min, max))
     end
 
     def parse_composite(e)
@@ -130,7 +130,7 @@ module X12
       fields = e.search("Field").inject([]) do |f, field|
         f << parse_field(field)
       end
-      Composite.new(name, fields)
+      Structures::Composite.new(name, fields)
     end
 
     def parse_loop(e)
@@ -146,7 +146,7 @@ module X12
                throw Exception.new("Cannot recognize syntax for: #{element.inspect} in loop #{e.inspect}")
              end
       end
-      Loop.new(name, components, Range.new(min, max))
+      Structures::Loop.new(name, components, Range.new(min, max))
     end
   end
 end

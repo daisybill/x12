@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe X12::Segment do
+describe X12::Structures::Segment do
 
-  let(:f_constant) { X12::Field.new("test1", "\"997\"", false, 3, 3, nil) }
-  let(:field_1) { X12::Field.new("test2", "string", false, 3, 3, nil) }
-  let(:field_2) { X12::Field.new("test3", "string", false, 3, 3, nil) }
+  let(:f_constant) { X12::Structures::Field.new("test1", "\"997\"", false, 3, 3, nil) }
+  let(:field_1) { X12::Structures::Field.new("test2", "string", false, 3, 3, nil) }
+  let(:field_2) { X12::Structures::Field.new("test3", "string", false, 3, 3, nil) }
 
   describe "a segment with a constant" do
-    subject { X12::Segment.new("MYSEG", [f_constant, field_1], 1..999) }
+    subject { X12::Structures::Segment.new("MYSEG", [f_constant, field_1], 1..999) }
 
     describe "#parse" do
       it "grabs the whole line when that's all there is" do
@@ -35,7 +35,7 @@ describe X12::Segment do
 
 
   describe "a segment with no constants" do
-    subject { X12::Segment.new("MYSEG", [field_1, field_2], 1..999) }
+    subject { X12::Structures::Segment.new("MYSEG", [field_1, field_2], 1..999) }
 
     describe "#parse" do
       it "grabs the whole line when that's all there is" do
@@ -69,9 +69,8 @@ describe X12::Segment do
       end
 
       it "doesn't find a field that isn't there" do
-        expect(subject.find_field("missing").class).to eq(X12::Empty)
+        expect(subject.find_field("missing").class).to eq(X12::Structures::Empty)
       end
     end
   end
 end
-

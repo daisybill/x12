@@ -21,8 +21,8 @@ describe "a 997 document" do
   end
 
   it "tests absent" do
-    expect(subject.L2000D.HHH).to eq(X12::EMPTY)
-    expect(subject.L2000B.L2111).to eq(X12::EMPTY)
+    expect(subject.L2000D.HHH).to eq(X12::Structures::EMPTY)
+    expect(subject.L2000B.L2111).to eq(X12::Structures::EMPTY)
     expect(subject.L2000C.L2100C.N3.AddressInformation1).to eq('')
   end
 

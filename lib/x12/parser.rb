@@ -29,9 +29,9 @@ module X12
       @x12_definition = X12::XMLDefinitions.new(str)
 
       # Populate fields in all segments found in all the loops
-      @x12_definition[X12::Loop].each_pair{|k, v|
+      @x12_definition[X12::Structures::Loop].each_pair{|k, v|
         process_loop(v)
-      } if @x12_definition[X12::Loop]
+      } if @x12_definition[X12::Structures::Loop]
 
       # Merge the newly parsed definition into a saved one, if any.
       if save_definition
@@ -47,7 +47,7 @@ module X12
 
     # Parse a loop of a given name out of a string. Throws an exception if the loop name is not defined.
     def parse(loop_name, str)
-      loop = @x12_definition[X12::Loop][loop_name]
+      loop = @x12_definition[X12::Structures::Loop][loop_name]
       throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
       loop = loop.dup
       loop.parse(str)
@@ -56,7 +56,7 @@ module X12
 
     # Make an empty loop to be filled out with information
     def factory(loop_name)
-      loop = @x12_definition[X12::Loop][loop_name]
+      loop = @x12_definition[X12::Structures::Loop][loop_name]
       throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
       loop = loop.dup
       return loop
@@ -68,9 +68,9 @@ module X12
     def process_loop(loop)
       loop.nodes.each do |i|
         case i
-          when X12::Loop
+          when X12::Structures::Loop
             process_loop(i)
-          when X12::Segment
+          when X12::Structures::Segment
             process_segment(i) unless i.nodes.size > 0
           else
             return
@@ -80,13 +80,13 @@ module X12
 
     # Instantiate segment's fields as previously defined
     def process_segment(segment)
-      unless @x12_definition[X12::Segment] && @x12_definition[X12::Segment][segment.name]
+      unless @x12_definition[X12::Structures::Segment] && @x12_definition[X12::Structures::Segment][segment.name]
         # Try to find it in a separate file if missing from the @x12_definition structure
         initialize(File.join(@dir_name, segment.name+'.xml'))
-        segment_definition = @x12_definition[X12::Segment][segment.name]
+        segment_definition = @x12_definition[X12::Structures::Segment][segment.name]
         throw Exception.new("Cannot find a definition for segment #{segment.name}") unless segment_definition
       else
-        segment_definition = @x12_definition[X12::Segment][segment.name]
+        segment_definition = @x12_definition[X12::Structures::Segment][segment.name]
       end
       segment_definition.nodes.each_index do |i|
         segment.nodes[i] = segment_definition.nodes[i] 

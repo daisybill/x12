@@ -11,9 +11,9 @@ describe X12::Parser do
 
       expect(definition.class).to eq(X12::XMLDefinitions)
       expect(definition.keys.count).to eq(1)
-      expect(definition.include?(X12::Loop)).to be_truthy
+      expect(definition.include?(X12::Structures::Loop)).to be_truthy
 
-      expect(definition[X12::Loop].include?("outer")).to be_truthy
+      expect(definition[X12::Structures::Loop].include?("outer")).to be_truthy
     end
   end
 
@@ -36,4 +36,3 @@ describe X12::Parser do
     end
   end
 end
-

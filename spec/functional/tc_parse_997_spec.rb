@@ -37,13 +37,13 @@ describe "a 997 document" do
   end
 
   it "tests absent" do
-    expect(subject.L1000.AK8.TransactionSetIdentifierCode).to eq(X12::EMPTY)
-    expect(subject.L1000.L1111).to eq(X12::EMPTY)
-    expect(subject.L1000.L1111.L2222).to eq(X12::EMPTY)
-    expect(subject.L1000.L1111.L2222.AFAFA).to eq(X12::EMPTY)
-    expect(subject.L1000.L1010[-99]).to eq(X12::EMPTY)
-    expect(subject.L1000.L1010[99]).to eq(X12::EMPTY)
-    expect(subject.L1000.L1010[99].AK4).to eq(X12::EMPTY)
+    expect(subject.L1000.AK8.TransactionSetIdentifierCode).to eq(X12::Structures::EMPTY)
+    expect(subject.L1000.L1111).to eq(X12::Structures::EMPTY)
+    expect(subject.L1000.L1111.L2222).to eq(X12::Structures::EMPTY)
+    expect(subject.L1000.L1111.L2222.AFAFA).to eq(X12::Structures::EMPTY)
+    expect(subject.L1000.L1010[-99]).to eq(X12::Structures::EMPTY)
+    expect(subject.L1000.L1010[99]).to eq(X12::Structures::EMPTY)
+    expect(subject.L1000.L1010[99].AK4).to eq(X12::Structures::EMPTY)
 
     expect(subject.L1000.AK8.TransactionSetIdentifierCode.to_s).to eq('')
   end
