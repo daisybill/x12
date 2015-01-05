@@ -22,6 +22,10 @@ module X12
         render
       end
 
+      def parse(content)
+        @content = content #TODO: make validation and type cast
+      end
+
       def render
         unless @content
           @content = $1 if self.type =~ /"(.*)"/ # If it's a constant

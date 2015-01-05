@@ -4,6 +4,10 @@ module X12
       def inspect
         "Composite "+super.inspect
       end
+
+      def parse(_)
+        raise NotImplementedError.new('X12::Structures::Composite#parse(content) method not implemented')
+      end
     end
   end
 end

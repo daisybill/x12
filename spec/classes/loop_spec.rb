@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe X12::Structures::Loop do
+  let(:separators) { { segment: "~", field: "*" } }
   let(:f_constant) { X12::Structures::Field.new("test1", "\"997\"", false, 3, 3, nil) }
   let(:field_1) { X12::Structures::Field.new("test2", "string", false, 3, 3, nil) }
   let(:field_2) { X12::Structures::Field.new("test3", "string", false, 3, 3, nil) }
@@ -11,24 +12,28 @@ describe X12::Structures::Loop do
 
 
   describe "#parse" do
+    let(:document) { X12::Document.new(content, separators) }
+
+    before { subject.parse(document) }
+
     context "on a simple segment" do
       subject { X12::Structures::Loop.new("TEST", [segment], 1..2) }
 
-      it "parses a correct string" do
-        result = subject.parse("AA*foo*bar~")
+      context "parses a correct string" do
+        let(:content) { "AA*foo*bar~" }
 
-        # should not return anything because the string is finished
-        expect(result).to eq("")
+        it { expect(document.size).to eq(0)
 
         segments = subject.nodes[0]
         expect(segments.size).to eq(1)
       end
 
       it "parses a string when there are two loops" do
-        result = subject.parse("AA*foo*bar~AA*baz*bing~")
+        document = X12::Document.new("AA*foo*bar~AA*baz*bing~", separators)
+        subject.parse(document)
 
-        expect(result).to eq("")
-        expect(subject.nodes[0].size).to eq(2)
+        expect(document.size).to eq(0)
+        expect(subject.loops).to eq(2)
       end
 
       # Not sure this is correct behaviour, as the definition above said 2 loops

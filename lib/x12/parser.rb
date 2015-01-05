@@ -1,6 +1,6 @@
 module X12
   class Parser
-    MS_DEVICES = ['CON', 'PRN', 'AUX', 'CLOCK$', 'NUL', 'COM1', 'LPT1', 'LPT2', 'LPT3', 'COM2', 'COM3', 'COM4']
+    MS_DEVICES = %w(CON PRN AUX CLOCK$ NUL COM1 LPT1 LPT2 LPT3 COM2 COM3 COM4)
 
     # Fixes up the file name so we don't worry about DOS files
     def self.sanitized_file_name(name)
@@ -50,7 +50,8 @@ module X12
       loop = @x12_definition[X12::Structures::Loop][loop_name]
       throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
       loop = loop.dup
-      loop.parse(str)
+      @document = X12::Document.new str, segment: loop.segment_separator, field: loop.field_separator
+      loop.parse(@document)
       return loop
     end
 

@@ -1,24 +1,12 @@
 module X12
   module Structures
     class Segment < Base
-
-      # Parses this segment out of a string, puts the match into value, returns the rest of the string - nil
-      # if cannot parse
-      def parse(str)
-        s = str
-        m = regexp.match(s)
-
-        return nil unless m
-
-        s = m.post_match
-        self.parsed_str = m[0]
-
-        @fields = self.to_s.chop.split(Regexp.new(Regexp.escape(field_separator)))
-        self.nodes.each_index { |i| self.nodes[i].content = @fields[i+1] }
-
-        s = do_repeats(s)
-
-        return s
+      def parse(document)
+        segment = document.current
+        if segment.name == name
+          nodes.each_with_index { |field, index| field.parse(segment.field(index)) }
+          document.next
+        end
       end
 
       # Render all components of this segment as string suitable for EDI
@@ -29,7 +17,7 @@ module X12
             repeat_str
           else
             # Have to render no matter how empty
-            repeat_str += i.name+i.nodes.reverse.inject('') do |nodes_str, j|
+            repeat_str << i.name+i.nodes.reverse.inject('') do |nodes_str, j|
               field = j.render
               (j.required or nodes_str != '' or field != '') ? field_separator+field+nodes_str : nodes_str
             end + segment_separator

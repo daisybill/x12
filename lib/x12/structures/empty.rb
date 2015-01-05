@@ -5,6 +5,8 @@ module X12
         super(nil, [])
       end
 
+      def parse(_);end
+
       def to_s
         ''
       end

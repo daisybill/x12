@@ -9,6 +9,8 @@ require 'x12/structures/segment'
 require 'x12/table'
 require 'x12/structures/loop'
 require 'x12/xmldefinitions'
+require 'x12/document'
+require 'x12/segment'
 require 'x12/parser'
 
 module X12
