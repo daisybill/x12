@@ -1,0 +1,10 @@
+<container comment="Specially for field spec">
+  <Field name="first" min="1" max="10"
+         comment="when validation and required attributes are omitted"/>
+  <Field name="second" required="n" min="2" max="10" validation="no"
+         comment="when validation and required attributes are false"/>
+  <Field name="third" required="y" min="3" max="3" validation="yes"
+         comment="when validation and required attributes are true"/>
+  <Field name="fourth" required="y" min="10" max="9"
+         comment="when min greater than max"/>
+</container>
