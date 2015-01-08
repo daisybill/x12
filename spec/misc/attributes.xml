@@ -1,0 +1,7 @@
+<attributes>
+  <attr name="string" comment="Lorem Ipsum Dolor" empty="" />
+  <attr name="int" empty="" zero="0" devil="13666" not_a_number="hello" />
+  <attr name="true boolean" y="y" yes="yes" t="t" true="true" one="1" />
+  <attr name="false boolean" empty="" n="n" no="no" f="f" false="false" zero="0" devil="13666" />
+  <attr name="range" empty="" zero="0" devil="13666" />
+</attributes>

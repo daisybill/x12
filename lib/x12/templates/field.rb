@@ -3,8 +3,8 @@ module X12
     class Field < X12::Templates::Base
       def self.parse_options(node)
         {
-          required: extract_boolean(node, :required),
-          validation: extract_boolean(node, :validation)
+          required: X12::Attributes.boolean(node, :required),
+          validation: X12::Attributes.boolean(node, :validation)
         }
       end
 

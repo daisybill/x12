@@ -1,6 +1,7 @@
 require 'nokogiri'
 
 require 'x12/version'
+require 'x12/attributes'
 require 'x12/templates/base'
 require 'x12/templates/field'
 require 'x12/templates/segment'
@@ -19,4 +20,3 @@ module X12
   EMPTY = Empty.new()
   TEST_REPEAT = 100
 end
-
