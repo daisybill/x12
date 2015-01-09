@@ -9,6 +9,16 @@ module X12
 
         protected
 
+        def options(*opts)
+          opts.each do |name|
+            key = name
+            key = key.to_s[0..-2].to_sym if key.to_s.include? '?'
+            define_method name do
+              @options[key]
+            end
+          end
+        end
+
         def parse_options(_); {}; end
       end
 
