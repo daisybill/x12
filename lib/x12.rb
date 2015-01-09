@@ -17,6 +17,7 @@ require 'x12/xmldefinitions'
 require 'x12/parser'
 
 module X12
+  ROOT = File.expand_path('../..', __FILE__)
   EMPTY = Empty.new()
   TEST_REPEAT = 100
 end

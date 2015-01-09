@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe X12::Templates::Field do
   let(:xml) do
-    str = File.open('spec/misc/fields.xml', 'r').read
+    str = File.open("#{X12::ROOT}/spec/misc/fields.xml", 'r').read
     Nokogiri.XML(str) { |c| c.noblanks }.root
   end
   let(:field) { X12::Templates::Field.from_xml(node) }

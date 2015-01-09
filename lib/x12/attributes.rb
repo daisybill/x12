@@ -15,7 +15,9 @@ module X12
 
       def int(node, attribute)
         str = X12::Attributes.string(node, attribute)
-        str.nil? ? nil : str.to_i
+        return if str.nil?
+        return Float::INFINITY if str == 'inf'
+        str.to_i
       end
 
       def range(node, from, to)

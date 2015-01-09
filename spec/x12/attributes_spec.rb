@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe X12::Attributes do
   let(:xml) do
-    str = File.open('spec/misc/attributes.xml', 'r').read
+    str = File.open("#{X12::ROOT}/spec/misc/attributes.xml", 'r').read
     Nokogiri.XML(str) { |c| c.noblanks }.root
   end
 
@@ -23,6 +23,7 @@ describe X12::Attributes do
     it { expect(X12::Attributes.int(node, :devil)).to eq(13666) }
     it { expect(X12::Attributes.int(node, :empty)).to eq 0 }
     it { expect(X12::Attributes.int(node, :nil)).to be_nil }
+    it { expect(X12::Attributes.int(node, :inf)).to eq(Float::INFINITY) }
   end
 
   context '.boolean' do
