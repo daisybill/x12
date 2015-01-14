@@ -88,12 +88,12 @@ module X12
         # Depth now
         nodes.each do |i|
           res = i.find(e) if i.kind_of?(X12::Loop)
-          return res unless res.nil? or EMPTY==res # otherwise keep looping
+          return res unless res.nil? or X12::EMPTY==res # otherwise keep looping
         end
         when X12::Segment
         return find_field(e).to_s
       end
-      return EMPTY
+      return X12::EMPTY
     end
     #
     # Present self and all repeats as an array with self being #0
@@ -122,7 +122,7 @@ module X12
         case self
         when X12::Segment
           res = find_field(str)
-          throw Exception.new("No field '#{str}' in segment '#{self.name}'") if EMPTY == res
+          throw Exception.new("No field '#{str}' in segment '#{self.name}'") if X12::EMPTY == res
           res.content = args[0].to_s
         else
           throw Exception.new("Illegal assignment to #{meth} of #{self.class}")
@@ -136,7 +136,7 @@ module X12
 
     # The main method implementing Ruby-like access methods for repeating elements
     def [](*args)
-      return self.to_a[args[0]] || EMPTY
+      return self.to_a[args[0]] || X12::EMPTY
     end
 
     # Yields to accompanying block passing self as a parameter.

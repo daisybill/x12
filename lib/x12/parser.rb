@@ -1,6 +1,6 @@
 module X12
   class Parser
-    MS_DEVICES = ['CON', 'PRN', 'AUX', 'CLOCK$', 'NUL', 'COM1', 'LPT1', 'LPT2', 'LPT3', 'COM2', 'COM3', 'COM4']
+    MS_DEVICES = %w(CON PRN AUX CLOCK$ NUL COM1 LPT1 LPT2 LPT3 COM2 COM3 COM4)
 
     # Fixes up the file name so we don't worry about DOS files
     def self.sanitized_file_name(name)
@@ -102,4 +102,3 @@ module X12
     end
   end
 end
-

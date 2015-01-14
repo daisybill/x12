@@ -28,10 +28,8 @@ require 'x12/segment'
 require 'x12/table'
 require 'x12/loop'
 require 'x12/xmldefinitions'
-require 'x12/parser'
+require_relative 'x12/parser'
 
-# module X12
-#   ROOT = File.expand_path('../..', __FILE__)
-#   EMPTY = Empty.new()
-#   TEST_REPEAT = 100
-# end
+module X12
+  EMPTY = Empty.new()
+end
