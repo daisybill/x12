@@ -1,6 +1,6 @@
 <Definition>
   <Loop name="all_defined">
-    <Segment name="ST"  max="1">
+    <Segment name="ST" max="1">
       <Field name="TransactionSetIdentifierCode" const="997" min="3" max="3" validation="T143" />
       <Field name="TransactionSetControlNumber" min="4" max="9" />
     </Segment>
