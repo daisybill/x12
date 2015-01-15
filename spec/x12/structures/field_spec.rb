@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe X12::Structures::Field do
-  let(:template) { X12::Templates::Field.new 'field', range: 1..10, required: false, validation: false }
+  let(:template) { TemplatesGenerator.field 'field' }
   let(:field) { template.create }
 
   context '#to_s' do

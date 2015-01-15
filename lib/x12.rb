@@ -28,7 +28,7 @@ require 'x12/segment'
 require 'x12/table'
 require 'x12/loop'
 require 'x12/xmldefinitions'
-require_relative 'x12/parser'
+require 'x12/parser'
 
 module X12
   EMPTY = Empty.new()

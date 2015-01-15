@@ -3,6 +3,8 @@ require 'bundler/setup'
 require 'awesome_print'
 require 'x12'
 
+Dir.glob(File.join(X12::ROOT, "spec", "support", "**", "*.rb")).each { |file| require file }
+
 RSpec.configure do |config|
   # some (optional) config here
 end
