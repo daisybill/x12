@@ -29,12 +29,12 @@ module X12
       end while size != document.size && !document.empty?
     end
 
-    def parse_segment(node, segment)
-      s = node.create
-      node.children.each_with_index { |field, index|
+    def parse_segment(segment, document)
+      s = segment.create
+      segment.children.each_with_index { |field, index|
         f = field.create
-        f.value = segment.fields[index]
-        s.children[field.name.to_sym] = f
+        f.value = document.fields[index]
+        s.children[field.key] = f
       }
       s
     end

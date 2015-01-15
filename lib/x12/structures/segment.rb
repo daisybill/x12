@@ -15,7 +15,7 @@ module X12
       end
 
       def create_field(name)
-        f = @template.children.find { |child| child.name.to_sym == name }
+        f = @template.children.find { |child| child.key == name }
         raise Exception.new "There are no field named #{name.inspect}" if f.nil?
         f.create
       end

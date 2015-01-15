@@ -45,6 +45,10 @@ module X12
         @children = []
       end
 
+      def key
+        @key ||= name.to_sym
+      end
+
       def create
         structure_class.new(self)
       end

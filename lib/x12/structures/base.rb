@@ -7,23 +7,24 @@ module X12
       def initialize(template)
         @template = template
         @children = {}
-        @template.children.each { |child| @children[child.name.to_sym] = nil }
+        @template.children.each { |child| @children[child.key] = nil }
         on_initialize
       end
 
       def valid?; end
 
-      def method_missing(name, *params)
-        key = name[-1] == '=' ? name.to_s[0..-2].to_sym : name
+      def method_missing(name, *params, &block)
+        key = name[-1] == '=' ? name[0..-2].to_sym : name
         warn "[DEPRECATION] `##{key}` is deprecated. Please use `#children[#{key.inspect}]` instead"
         super unless @children.key? key
-        key == name ? getter(key) : setter(key, params[0])
+        key == name ? getter(key, &block) : setter(key, params[0])
       end
 
       protected
 
       def getter(name)
-        @children[name]
+        res = @children[name]
+        block_given? ? yield(res) : res
       end
 
       def setter(name, value)
