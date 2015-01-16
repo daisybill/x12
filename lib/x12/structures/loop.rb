@@ -5,13 +5,21 @@ module X12
         yield self
         @loops << @children
         @children = @loop.dup
+        nil
       end
 
-      def each
+      def next
+        @loops << @children
+        @children = @loop.dup
+        self
+      end
+
+      def each #TODO: implement enumerable interface
         @loops.each { |loop|
           @children = loop
           yield self
         }
+        nil
       end
 
       def size

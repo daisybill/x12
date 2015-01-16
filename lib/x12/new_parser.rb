@@ -4,9 +4,14 @@ module X12
       @template = template
     end
 
-    def parse(file_name)
-      document = X12::Document.new file_name, {}
-      @template.children.each { |child| parse_node child, document }
+    def parse(content)
+      document = X12::Document.new content, { segment: '~', field: '*' }
+      result = X12::Structures::Base.new @template
+      @template.children.each { |child|
+        parsed = parse_node child, document
+        result.children[child.key] = parsed unless parsed.nil?
+      }
+      result
     end
 
     private
@@ -17,16 +22,17 @@ module X12
         parse_loop node, document
       elsif node.segment? && node.name == document.current.name
         parse_segment node, document.fetch
-      else
-        node.children.each { |child| parse_node child, document }
       end
     end
 
     def parse_loop(loop, document)
+      result = loop.create
       begin
         size = document.size
-        loop.children.each { |child| parse_node child, document }
+        loop.children.each { |child| result.children[child.key] = parse_node child, document }
+        result.next if size != document.size
       end while size != document.size && !document.empty?
+      result
     end
 
     def parse_segment(segment, document)

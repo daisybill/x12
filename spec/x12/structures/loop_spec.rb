@@ -83,4 +83,8 @@ describe X12::Structures::Loop do
 
     it { expect { loop.each { |l| iterator += 1 }.to change { iterator }.by (+2) } }
   end
+
+  context '#next' do
+    it { expect { loop.next }.to change { loop.size }.by(+1) }
+  end
 end

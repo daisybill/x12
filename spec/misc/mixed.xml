@@ -1,0 +1,49 @@
+<Loop name="mixed" min="1" max="1">
+  <Segment name="ISA" min="1" max="1">
+    <Field name="Something" />
+  </Segment>
+  <Loop name="FG" min="1" max="inf">
+    <Segment name="GS" min="1" max="1">
+      <Field name="Start" />
+    </Segment>
+    <Loop name="document_a" comment="xxx">
+      <Segment name="ST"  max="1">
+        <Field name="A" const="824" min="3" max="3"/>
+        <Field name="B" min="4" max="9"/>
+      </Segment>
+      <Segment name="FOO" max="1">
+        <Field name="Test" />
+      </Segment>
+      <Segment name="SE" >
+        <Field name="Tests" />
+      </Segment>
+    </Loop>
+    <Segment name="GE" min="1" max="1">
+      <Field name="End" />
+    </Segment>
+  </Loop>
+  <Loop name="FG2" min="1" max="inf">
+    <Segment name="GS" min="1" max="1">
+      <Field name="Start" />
+    </Segment>
+    <Loop name="document_b" comment="xxx">
+      <Segment name="ST"  max="1">
+        <Field name="A" const="997" min="3" max="3"/>
+        <Field name="B" min="4" max="9"/>
+      </Segment>
+      <Segment name="BAR" max="1">
+        <Field name="Blah" />
+      </Segment>
+      <Segment name="SE" >
+        <Field name="Test" />
+      </Segment>
+    </Loop>
+    <Segment name="GE" min="1" max="1">
+      <Field name="End" />
+    </Segment>
+  </Loop>
+
+  <Segment name="IEA" min="1" max="1">
+    <Field name="Something" />
+  </Segment>
+</Loop>
