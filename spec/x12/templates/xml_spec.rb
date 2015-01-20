@@ -66,8 +66,20 @@ describe X12::Templates::Xml do
     let(:file_name) { "#{X12::ROOT}/spec/misc/only_names" }
 
     it { expect(template.children.count).to eq(2) }
+
+    context 'NTE Segment' do
+      let(:segment) { template.children[0] }
+
+      it { expect(segment).to be_kind_of X12::Templates::Segment }
+      it { expect(segment.children.count).to eq(2) }
+      it { expect(segment.children[0]).to be_kind_of X12::Templates::Field }
+      it { expect(segment.children[0].name).to eq('NoteReferenceCode') }
+      it { expect(segment.children[1]).to be_kind_of X12::Templates::Field }
+      it { expect(segment.children[1].name).to eq('Description') }
+    end
+
     context 'all_defined loop' do
-      let(:loop) { template.children[0] }
+      let(:loop) { template.children[1] }
 
       it { expect(loop).to be_kind_of X12::Templates::Loop }
       it { expect(loop.children.count).to eq(2) }
@@ -94,17 +106,6 @@ describe X12::Templates::Xml do
         it { expect(child.children[1]).to be_kind_of X12::Templates::Field }
         it { expect(child.children[1].name).to eq('ReferenceIdentificationQualifier') }
       end
-    end
-
-    context 'NTE Segment' do
-      let(:segment) { template.children[1] }
-
-      it { expect(segment).to be_kind_of X12::Templates::Segment }
-      it { expect(segment.children.count).to eq(2) }
-      it { expect(segment.children[0]).to be_kind_of X12::Templates::Field }
-      it { expect(segment.children[0].name).to eq('NoteReferenceCode') }
-      it { expect(segment.children[1]).to be_kind_of X12::Templates::Field }
-      it { expect(segment.children[1].name).to eq('Description') }
     end
   end
 end
