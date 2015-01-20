@@ -24,7 +24,7 @@ module X12
       }
 
       def parse(parent, nodes)
-        parent.children = nodes.map do |n|
+        parent.children = nodes.reject(&:comment?).map do |n|
           child = CHILDREN_CLASSES[n.name].from_xml(n)
           elements = get_elements_for(n)
           parse(child, elements) unless elements.empty?
