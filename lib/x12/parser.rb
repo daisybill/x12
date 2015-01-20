@@ -48,13 +48,11 @@ module X12
 
     # Parse a loop of a given name out of a string. Throws an exception if the loop name is not defined.
     def parse(loop_name, str)
-      # loop = @x12_definition[X12::Loop][loop_name]
-      # throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
-      # loop = loop.dup
-      # loop.parse(str)
-      # return loop
-      template = X12::Templates::Xml.new(@template_path)
-      X12::NewParser.new(template).parse(str)
+      loop = @x12_definition[X12::Loop][loop_name]
+      throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
+      loop = loop.dup
+      loop.parse(str)
+      return loop
     end
 
     # Make an empty loop to be filled out with information

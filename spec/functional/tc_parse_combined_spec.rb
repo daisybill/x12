@@ -15,27 +15,25 @@ describe "a mixed template" do
     end
 
     it "pulls out the first group" do
-      # expect(subject.GS[0].Start).to eq("Number1")
-      expect(subject.FG[0].GS.Start).to eq("Number1")
+      expect(subject.GS[0].Start).to eq("Number1")
+      expect(subject.FG.GS.Start).to eq("Number1")
 
-      expect(subject.FG[0].GE.End).to eq("Number1")
+      expect(subject.FG.GE.End).to eq("Number1")
     end
 
     it "pulls out the 824 within the first group" do
-      expect(subject.FG[0].document_a[0].ST.A).to eq("824")
-      expect(subject.FG[0].document_a[0].ST.B).to eq("1")
+      expect(subject.FG.document_a.ST.A).to eq("824")
+      expect(subject.FG.document_a.ST.B).to eq("1")
 
-      # expect(subject.FG.to_s).to eq("GS*Number1~ST*824*1~FOO*hello~SE*Test~GE*Number1~")
+      expect(subject.FG.to_s).to eq("GS*Number1~ST*824*1~FOO*hello~SE*Test~GE*Number1~")
     end
 
     it "pulls out the 997 within the second group" do
-      require 'pry'
-      binding.pry
-      expect(subject.FG2[0].GS.Start).to eq("Number2")
-      expect(subject.FG2[0].document_b[0].ST.A).to eq("997")
-      expect(subject.FG2[0].document_b[0].ST.B).to eq("2")
+      expect(subject.FG2.GS.Start).to eq("Number2")
+      expect(subject.FG2.document_b.ST.A).to eq("997")
+      expect(subject.FG2.document_b.ST.B).to eq("2")
 
-      # expect(subject.FG2.to_s).to eq("GS*Number2~ST*997*2~BAR*Doc2SE*2~GE*Number1~")
+      expect(subject.FG2.to_s).to eq("GS*Number2~ST*997*2~BAR*Doc2SE*2~GE*Number1~")
     end
   end
 
@@ -46,11 +44,6 @@ ST*824*1~
 FOO*hello~
 SE*Test~
 GE*Number1~
-GS*Number1.5~
-ST*824*1.5~
-BAR*hello1.5~
-SE*Test1.5~
-GE*Number1.5~
 GS*Number2~
 ST*997*2~
 BAR*Doc2
