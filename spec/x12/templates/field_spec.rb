@@ -39,4 +39,12 @@ describe X12::Templates::Field do
 
     it { expect { field }.to raise_error ArgumentError }
   end
+
+  context 'when constant' do
+    let(:node) { xml.children[4] }
+
+    it { expect(field.name).to eq('Constant') }
+    it { expect(field).to be_required }
+    it { expect(field.const).to eq 'const' }
+  end
 end

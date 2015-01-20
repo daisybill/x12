@@ -7,4 +7,6 @@
          comment="when validation and required attributes are true"/>
   <Field name="fourth" required="y" min="10" max="9"
          comment="when min greater than max"/>
+  <Field name="Constant" required="y" const="const"
+         comment="when min greater than max"/>
 </fields>
