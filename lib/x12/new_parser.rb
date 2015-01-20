@@ -5,7 +5,7 @@ module X12
     end
 
     def parse(content)
-      document = X12::Document.new content, { segment: '~', field: '*' }
+      document = X12::Document.new content, segment: '~', field: '*' #TODO: use separators method
       result = X12::Structures::Base.new @template
       @template.children.each { |child|
         parsed = parse_node child, document
@@ -26,12 +26,12 @@ module X12
     end
 
     def parse_loop(loop, document)
+      return unless loop.trigger?(document.current)
       result = loop.create
       begin
-        size = document.size
         loop.children.each { |child| result.children[child.key] = parse_node child, document }
-        result.next if size != document.size
-      end while size != document.size && !document.empty?
+        result.next unless document.empty?
+      end while !document.empty? && loop.trigger?(document.current)
       result
     end
 
@@ -43,6 +43,15 @@ module X12
         s.children[field.key] = f
       }
       s
+    end
+
+    def separators(str)
+      raise Exception.new 'It is not a valid X12 document' unless str[0..2] == 'ISA'
+      {
+        segment: str[105],
+        field: str[3],
+        composite: str[104]
+      }
     end
   end
 end

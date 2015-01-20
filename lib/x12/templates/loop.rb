@@ -9,6 +9,10 @@ module X12
           range: X12::Attributes.range(node, :min, :max)
         }
       end
+
+      def trigger?(segment)
+        children.first.is_it? segment
+      end
     end
   end
 end
