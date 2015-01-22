@@ -72,6 +72,12 @@ module X12
       def structure_class
         X12::Structures::Base
       end
+
+      def inspect
+        result = "#{self.class}: #{self.key}"
+        result << " (#{@children.map(&:name).join(', ')})" unless field?
+        "<#{result}>"
+      end
     end
   end
 end

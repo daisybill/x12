@@ -8,6 +8,7 @@ module X12
       @current = first_segment
     end
 
+    #TODO: go away from shifting, use index instead (must be faster)
     def fetch
       raise "Can't fetch next segment, document is empty" if empty?
       result = @current

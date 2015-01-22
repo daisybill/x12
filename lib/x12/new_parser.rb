@@ -5,12 +5,9 @@ module X12
     end
 
     def parse(content)
-      document = X12::Document.new content, segment: '~', field: '*' #TODO: use separators method
+      document = X12::Document.new content, separators(content)
       result = X12::Structures::Base.new @template
-      @template.children.each { |child|
-        parsed = parse_node child, document
-        result.children[child.key] = parsed unless parsed.nil?
-      }
+      @template.children.each { |child| result.add(parse_node child, document) }
       result
     end
 
@@ -20,8 +17,14 @@ module X12
       return if document.empty?
       if node.loop?
         parse_loop node, document
-      elsif node.segment? && node.name == document.current.name
-        parse_segment node, document.fetch
+      elsif node.segment?
+        result = []
+        index = 0
+        while !document.empty? && node.is_it?(document.current) && index <= node.range.end
+          index += 1
+          result << parse_segment(node, document.fetch)
+        end
+        result
       end
     end
 
@@ -29,8 +32,8 @@ module X12
       return unless loop.trigger?(document.current)
       result = loop.create
       begin
-        loop.children.each { |child| result.children[child.key] = parse_node child, document }
-        result.next unless document.empty?
+        loop.children.each { |child| result.add(parse_node child, document) }
+        result.next
       end while !document.empty? && loop.trigger?(document.current)
       result
     end
@@ -40,18 +43,25 @@ module X12
       segment.children.each_with_index { |field, index|
         f = field.create
         f.value = document.fields[index]
-        s.children[field.key] = f
+        s.children << f
       }
       s
     end
 
     def separators(str)
-      raise Exception.new 'It is not a valid X12 document' unless str[0..2] == 'ISA'
-      {
-        segment: str[105],
-        field: str[3],
-        composite: str[104]
-      }
+      if str[0..2] == 'ISA'
+        {
+          segment: str[105],
+          field: str[3],
+          composite: str[104]
+        }
+      else
+        {
+          segment: '~',
+          field: '*',
+          composite: ':'
+        }
+      end
     end
   end
 end

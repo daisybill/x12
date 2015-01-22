@@ -1,11 +1,12 @@
 module X12
   module Templates
     class Segment < X12::Templates::Base
-      options :required?
+      options :required?, :range
 
       def self.parse_options(node)
         {
-          required: X12::Attributes.boolean(node, :required)
+          required: X12::Attributes.boolean(node, :required),
+          range: X12::Attributes.range(node, :min, :max)
         }
       end
 

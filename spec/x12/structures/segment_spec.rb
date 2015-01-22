@@ -5,13 +5,13 @@ describe X12::Structures::Segment do
   let(:segment) { template.create }
 
   context 'setters' do
-    it { expect { segment.name = 'James Bond' }.to_not raise_error }
-    it { expect { segment.is_agemnt = true }.to raise_error }
+    it { expect { segment.name = 'James Bond' }.to raise_error NotImplementedError }
+    it { expect { segment.is_agemnt = true }.to raise_error NoMethodError }
   end
 
   context 'getters' do
     it { expect(segment.name).to be_nil }
-    it { expect { segment.is_agemnt }.to raise_error }
+    it { expect { segment.is_agent }.to raise_error NoMethodError }
 
     context 'when values present' do
       let(:values) { {name: 'John Smith', email: 'john.smith@gmail.com', age: 34} }

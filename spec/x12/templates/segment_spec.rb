@@ -26,6 +26,6 @@ describe X12::Templates::Segment do
 
     it { expect(segment.name).to eq('third') }
     it { expect(segment).not_to be_required }
-    it { expect{ segment.range }.to raise_error NoMethodError }
+    it { expect(segment.range).to eq(13..666) }
   end
 end

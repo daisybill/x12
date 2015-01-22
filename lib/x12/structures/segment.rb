@@ -5,13 +5,8 @@ module X12
       protected
 
       def getter(name)
-        f = @children[name]
+        f = super(name)
         f && f.value
-      end
-
-      def setter(name, value)
-        f = @children[name] ||= create_field(name)
-        f.value = value
       end
 
       def create_field(name)

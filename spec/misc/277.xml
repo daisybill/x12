@@ -1,0 +1,133 @@
+<Definition>
+  <Loop name="277">
+    <Segment name="ISA" min="1" max="1"/>
+    <Segment name="GS" min="1" max="1"/>
+
+    <Loop name="L0000" min="1">
+      <Segment name="ST" min="1" max="1"/>
+      <Segment name="BHT" min="1" max="1"/>
+
+      <!-- Information Source Level -->
+      <Loop name="L2000A" min="1">
+        <Segment name="HL" min="1" max="1">
+          <Field name="HierarchicalIdNumber" min="1" max="12"/>
+          <Field name="HierarchicalParentIdNumber" required="y" min="1" max="12"/>
+          <Field name="HierarchicalLevelCode" const="20" min="1" max="2" validation="T735"/>
+          <Field name="HierarchicalChildCode" required="y" min="1" max="1" validation="T736"/>
+        </Segment>
+
+        <!-- Information Source Name Loop -->
+        <Loop name="L2100A" min="1">
+          <Segment name="NM1" min="1" max="1"/>
+        </Loop>
+
+        <!-- Transmission Receipt Control Identifier Loop -->
+        <Loop name="L2200A" min="1">
+          <Segment name="TRN" min="1" max="1">
+            <Field name="TraceTypeCode" const="1" min="1" max="2" validation="T481"/>
+            <Field name="ReferenceIdentification1" min="1" max="50"/>
+          </Segment>
+          <Segment name="DTP" min="1" max="1">
+            <Field name="DateTimeQualifier" const="050" min="3" max="3" validation="T374"/>
+            <Field name="DateTimePeriodFormatQualifier" min="2" max="3" validation="T1250"/>
+            <Field name="DateTimePeriod" min="1" max="35"/>
+          </Segment>
+          <Segment name="DTP" min="1" max="1">
+            <Field name="DateTimeQualifier" const="009" min="3" max="3" validation="T374"/>
+            <Field name="DateTimePeriodFormatQualifier" min="2" max="3" validation="T1250"/>
+            <Field name="DateTimePeriod" min="1" max="35"/>
+          </Segment>
+        </Loop>
+
+        <!-- Information Receiver Level -->
+        <Loop name="L2000B" min="1">
+          <Segment name="HL" min="1" max="1">
+            <Field name="HierarchicalIdNumber" min="1" max="12"/>
+            <Field name="HierarchicalParentIdNumber" required="y" min="1" max="12"/>
+            <Field name="HierarchicalLevelCode" const="21" min="1" max="2" validation="T735"/>
+            <Field name="HierarchicalChildCode" required="y" min="1" max="1" validation="T736"/>
+          </Segment>
+
+          <!-- Information Receiver Name -->
+          <Loop name="L2100B" min="1" max="1">
+            <Segment name="NM1" min="1" max="1"/>
+          </Loop>
+
+          <!-- Information Receiver Trace Identifier -->
+          <Loop name="L2200B" min="0" max="1">
+            <Segment name="TRN" min="1" max="1"/>
+            <Segment name="STC" min="1"/>
+            <Segment name="QTY" min="0"/>
+            <Segment name="QTY" min="0"/>
+            <Segment name="AMT" min="0"/>
+            <Segment name="AMT" min="0"/>
+          </Loop>
+
+          <!-- Information Receiver Application Trace Identifier Loop -->
+          <Loop name="L2000C" min="0">
+            <Segment name="HL" min="1" max="1">
+              <Field name="HierarchicalIdNumber" min="1" max="12"/>
+              <Field name="HierarchicalParentIdNumber" required="y" min="1" max="12"/>
+              <Field name="HierarchicalLevelCode" const="19" min="1" max="2" validation="T735"/>
+              <Field name="HierarchicalChildCode" required="y" min="1" max="1" validation="T736"/>
+            </Segment>
+
+            <!-- Billing Provider Name -->
+            <Loop name="L2100C" min="1" max="1">
+              <Segment name="NM1" min="1" max="1"/>
+            </Loop>
+
+            <!-- Provider of Service Trace Identifier -->
+            <Loop name="L2200C" min="0">
+              <Segment name="TRN" min="1" max="1"/>
+              <Segment name="STC" min="0"/>
+              <Segment name="REF" min="0" max="3"/>
+              <Segment name="QTY" min="0"/>
+              <Segment name="QTY" min="0"/>
+              <Segment name="AMT" min="0"/>
+              <Segment name="AMT" min="0"/>
+            </Loop>
+
+            <!-- Patient Level Loop -->
+            <Loop name="L2000D" min="0">
+              <Segment name="HL" min="1" max="1">
+                <Field name="HierarchicalIdNumber" min="1" max="12"/>
+                <Field name="HierarchicalParentIdNumber" required="y" min="1" max="12"/>
+                <Field name="HierarchicalLevelCode" const="PT" min="1" max="2" validation="T735"/>
+                <Field name="HierarchicalChildCode" required="y" min="1" max="1" validation="T736"/>
+              </Segment>
+
+              <!-- Patient Name -->
+              <Loop name="L2100D" min="1" max="1">
+                <Segment name="NM1" min="1" max="1"/>
+              </Loop>
+
+              <!-- Claim Status Tracking Number -->
+              <Loop name="L2200D" min="0">
+                <Segment name="TRN" min="1" max="1"/>
+                <Segment name="STC" min="1"/>
+                <Segment name="REF" min="0" max="1"/>
+                <Segment name="REF" min="0" max="1"/>
+                <Segment name="REF" min="0" max="1"/>
+                <Segment name="DTP" min="1" max="1"/>
+
+                <!-- Service Line Information -->
+                <Loop name="L2220D" min="0">
+                  <Segment name="SVC" min="1" max="1"/>
+                  <Segment name="STC" min="1"/>
+                  <Segment name="REF" min="1" max="1"/>
+                  <Segment name="REF" min="0" max="1"/>
+                  <Segment name="DTP" min="0" max="1"/>
+                </Loop>
+              </Loop>
+            </Loop>
+          </Loop>
+        </Loop>
+      </Loop>
+
+      <Segment name="SE" min="1" max="1"/>
+    </Loop>
+    <Segment name="GE" min="1" max="1"/>
+    <Segment name="IEA" min="1" max="1"/>
+  </Loop>
+</Definition>
