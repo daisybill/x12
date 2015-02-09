@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe "a 997 document" do
-  subject { X12::Parser.new('misc/270.xml').parse('270', document) }
+  subject { X12::Parser.new("#{X12::ROOT}/misc/270.xml").parse('270', document) }
 
   it "tests ST" do
-    expect(subject.ST.to_s).to eq('ST*270*1001~')
     expect(subject.ST.TransactionSetIdentifierCode).to eq('270')
+    expect(subject.ST.TransactionSetControlNumber).to eq('1001')
   end
 
   it "tests L2000A_NM1" do
-    expect(subject.L2000A.L2100A.NM1.NameLastOrOrganizationName).to eq('BIG PAYOR')
+    expect(subject.L2000A[0].L2100A[0].NM1.NameLastOrOrganizationName).to eq('BIG PAYOR')
   end
 
   it "tests L2000C_NM1" do
-    expect(subject.L2000C.L2100C.NM1.NameFirst).to eq('Joe')
+    expect(subject.L2000C[0].L2100C[0].NM1.NameFirst).to eq('Joe')
   end
 
   it "tests L2000A_HL" do

@@ -1,0 +1,5 @@
+<segments>
+  <Segment name="first" />
+  <Segment name="second" required="true" />
+  <Segment name="third" required="false" min="13" max="666" />
+</segments>

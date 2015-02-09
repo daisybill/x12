@@ -1,0 +1,4 @@
+<loops>
+  <Loop name="first" />
+  <Loop name="second" required="true" min="2" max="10" />
+</loops>

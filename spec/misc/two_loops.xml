@@ -1,0 +1,4 @@
+<Definition>
+  <Loop name="all_defined" />
+  <Loop name="only_names" />
+</Definition>

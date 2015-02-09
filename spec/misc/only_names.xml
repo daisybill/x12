@@ -1,0 +1,6 @@
+<Definition>
+  <Loop name="only_names">
+    <Segment name="NTE" />
+    <Loop name="all_defined" />
+  </Loop>
+</Definition>
