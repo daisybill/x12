@@ -34,7 +34,7 @@ module X12
       begin
         loop.children.each { |child| result.add(parse_node child, document) }
         result.next
-      end while !document.empty? && loop.trigger?(document.current)
+      end while !document.empty? && loop.trigger?(document.current) && result.size < loop.range.end
       result
     end
 
