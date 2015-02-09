@@ -26,10 +26,6 @@ module X12
         @loops.size
       end
 
-      def empty?
-        size == 0
-      end
-
       def has_content?
         warn '[DEPRECATION] `#has_content?` deprecated, use `#empty` instead'
         !empty?

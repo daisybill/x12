@@ -24,6 +24,14 @@ module X12
         true
       end
 
+      def size
+        @children.size
+      end
+
+      def empty?
+        size.zero?
+      end
+
       def add(child)
         return if child.nil?
         child.is_a?(Array) ? @children.push(*child.compact) : @children.push(child)
