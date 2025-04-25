@@ -147,7 +147,7 @@ module X12
 
     # The main method implementing Ruby-like access methods for nested elements
     def method_missing(meth, *args, &block)
-      str = meth.id2name
+      str = String.new(meth.id2name)
       str = str[1..str.length] if str =~ /^_\d+$/ # to avoid pure number names like 270, 997, etc.
       #puts "Missing #{str}"
       if str =~ /=$/
